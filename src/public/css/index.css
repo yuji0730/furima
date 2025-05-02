@@ -1,0 +1,46 @@
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    margin-top: 10px;
+    padding: 0 20px;
+}
+
+.tab {
+    margin-right: 20px;
+    padding: 10px 0;
+    font-weight: bold;
+    text-decoration: none;
+    color: #666;
+}
+
+.tab.active {
+    color: red;
+    border-bottom: 2px solid red;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 30px 50px;
+}
+
+.product-item {
+    text-align: left;
+    width: 200px;
+}
+
+.product-image {
+    background-color: #ddd;
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+    width: 200px;
+}
+
+.product-name {
+    font-size: 14px;
+}

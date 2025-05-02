@@ -1,0 +1,99 @@
+/* header.css */
+.header {
+    background-color: black;
+    color: white; /* ヘッダー全体の文字色を白に */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between; /* 左右を端揃え */
+    align-items: center;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: white; /* ロゴリンクの文字色を白に */
+}
+
+.logo {
+    height: 30px; /* 例：ロゴの高さ */
+}
+
+.search-container {
+    flex-grow: 1; /* 検索フォームが中央に寄るように */
+    display: flex;
+    justify-content: center; /* 検索フォームを中央に配置 */
+}
+
+.search-form {
+    display: flex;
+    width: 50%; /* 例：検索フォームの幅 */
+    max-width: 600px; /* 例：検索フォームの最大幅 */
+    background-color: white; /* 検索フォームの背景を白に */
+    border-radius: 5px;
+    overflow: hidden; /* 角丸を適用するために必要 */
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 8px 12px;
+    border: none;
+    font-size: 14px;
+    color: black; /* 検索フォームの文字色を黒に */
+}
+
+.search-input:focus {
+    outline: none; /* フォーカス時のボーダーを削除 */
+}
+
+.search-button {
+    padding: 8px 12px;
+    background-color: white; /* 検索ボタンの背景を白に */
+    color: black; /* 検索ボタンの文字色を黒に */
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.search-button:hover {
+    background-color: #eee; /* ホバー時の背景色 */
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-link {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 14px;
+}
+
+.header-link:hover {
+    text-decoration: underline; /* ホバー時に下線 */
+}
+
+.header-button {
+    background-color: white; /* ボタンの背景を白に */
+    color: black; /* ボタンの文字色を黒に */
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    margin-left: 15px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.header-button:hover {
+    background-color: #eee; /* ホバー時の背景色 */
+}
+
+.header-button.出品 {
+    background-color: #eee; /* 「出品」ボタンの色 */
+    color: black;
+}
+
+.header-button.出品:hover {
+    background-color: #c82333;
+}

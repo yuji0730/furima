@@ -1,0 +1,104 @@
+.profile-container {
+  width: 100%;
+  padding: 40px 20px 0;
+}
+
+/* プロフィールヘッダーだけ中央寄せ */
+.profile-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+/* プロフィール内の横並び */
+.profile-box {
+  display: flex;
+  align-items: center;
+  gap: 50px; /* ← ここで間隔を広く */
+}
+
+/* プロフィール画像 */
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #ddd;
+}
+
+/* ユーザー名 */
+.username {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 50px; /* オプションで右に余白追加も可 */
+}
+
+/* 編集ボタン */
+.edit-button {
+  border: 1px solid red;
+  color: red;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.edit-button:hover {
+  background-color: #ffe6e6;
+}
+
+/* タブメニュー：中央寄せではなく左寄せもできるように変更 */
+.tab-menu {
+  display: flex;
+  border-bottom: 1px solid #aaa;
+  margin-bottom: 30px;
+  gap: 40px;
+  padding-left: 60px;
+}
+
+/* タブ */
+.tab {
+  padding-bottom: 10px;
+  color: gray;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.tab.active {
+  color: red;
+  border-bottom: 3px solid red;
+}
+
+/* 商品一覧：画面幅いっぱいで表示 */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 30px;
+  width: 100%;
+}
+
+.item-card {
+  text-align: center;
+}
+
+.item-image {
+  background-color: #ddd;
+  width: 100%;
+  padding-top: 100%; /* 正方形 */
+  position: relative;
+}
+
+.item-image::before {
+  content: "商品画像";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.item-name {
+  margin-top: 10px;
+}
+
+
