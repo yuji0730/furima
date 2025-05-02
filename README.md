@@ -3,7 +3,7 @@
 ## 環境構築
 
 Dockerビルド 
- 1. git@github.com:yuji0730/contact-test.git
+ 1. git@github.com:yuji0730/furima.git
  2. docker-compose up -d—build
  
 laravel環境構築 
