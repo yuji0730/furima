@@ -30,7 +30,7 @@ DB_PASSWORD=laravel_pass
 * MySQL 8.0.26
 
 ## ER図
-
+![ER図]("\\wsl.localhost\Ubuntu\home\yuji\coachtech\.drawio.png")
  
 ## URL 
 * 開発環境:http://localhost/ 
