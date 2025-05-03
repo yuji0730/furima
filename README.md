@@ -4,7 +4,7 @@
 
 Dockerビルド 
  1. git@github.com:yuji0730/furima.git
- 2. docker-compose up -d—build
+ 2. `docker-compose up -d—build`
  
 laravel環境構築 
 1. docker-compose exec php bash  
