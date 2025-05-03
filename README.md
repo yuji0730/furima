@@ -3,12 +3,12 @@
 ## 環境構築
 
 Dockerビルド 
- 1. git@github.com:yuji0730/furima.git
+ 1. `git clone git@github.com:yuji0730/furima.git`
  2. `docker-compose up -d—build`
  
 laravel環境構築 
-1. docker-compose exec php bash  
-2. composer install 
+1. `docker-compose exec php bash`
+2. `composer install`
 3. .env.exampleファイルから.envを作成
 4. .envに以下の環境変数を追加
 ```env
@@ -19,9 +19,9 @@ DB_DATABASE=laravel_db
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
 ```
-5. php artisan key:generate
-6. php artisan migrate 
-7. php artisan db:seed
+5. `php artisan key:generate`
+6. `php artisan migrate` 
+7. `php artisan db:seed`
 
 
 ## 使用技術
