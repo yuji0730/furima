@@ -14,51 +14,52 @@ class ItemController extends Controller
 {
     public function index(Request $request)
 {
-    // クエリパラメータが ?tab=mylist の場合
+    $keyword = $request->input('keyword');
+
     if ($request->tab === 'mylist') {
         if (Auth::check()) {
-            // ログイン中なら、ユーザーがいいねした商品を取得
-            $items = Item::whereIn('id', Auth::user()->likes()->pluck('item_id'))->get();
+            $likedItemIds = Auth::user()->likes()->pluck('item_id');
+
+            $items = Item::whereIn('id', $likedItemIds)
+                    ->when($keyword, function ($query) use ($keyword) {
+                    $query->where('name', 'like', "%{$keyword}%");
+                    })->get();
         } else {
-            // ゲストは空のコレクションを渡す（何も表示しない）
             $items = collect();
         }
     } else {
-        // 通常の「おすすめ」表示（ログインユーザーの出品を除く）
-        if (Auth::check()) {
-            $items = Item::where('user_id', '!=', Auth::id())->get();
-        } else {
-            $items = Item::all();
-        }
+        $items = Item::when(Auth::check(), function ($query) {
+                            $query->where('user_id', '!=', Auth::id());
+                        })
+                        ->when($keyword, function ($query) use ($keyword) {
+                            $query->where('name', 'like', "%{$keyword}%");
+                        })
+                        ->get();
     }
 
     return view('index', compact('items'));
 }
 
 
-
-
     public function exhibition()
     {
-        $categories = Category::all(); // カテゴリ一覧を渡す
+        $categories = Category::all();
         return view('exhibition', compact('categories'));
     }
 
     public function store(ExhibitionRequest $request)
     {
-        // バリデーション済みのデータを取得
+
         $validated = $request->validated();
 
         $item = new Item();
         $item->user_id = Auth::id();
         $item->name = $validated['name'];
-        $item->brand = $request->input('brand'); // brandはバリデーション対象外ならこうする
+        $item->brand = $request->input('brand');
         $item->description = $validated['description'];
         $item->condition = $validated['condition'];
         $item->price = $validated['price'];
 
-        // データ保存処理などを書く
-        // 画像を保存
         if ($request->hasFile('image')) {
             $filename = $request->file('image')->hashName();
             $request->file('image')->storeAs('', $filename, 'public');
@@ -67,7 +68,6 @@ class ItemController extends Controller
 
         $item->save();
 
-            // カテゴリー（中間テーブル）を保存
         if ($request->has('categories')) {
             $item->categories()->attach($request->input('categories'));
         }

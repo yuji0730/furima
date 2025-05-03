@@ -8,6 +8,9 @@
 <main class="product-container">
 <div class="product-main">
     <div class="product-image">
+        @if($item->purchase)
+            <div class="sold-badge">SOLD</div>
+        @endif
         <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
 
@@ -37,9 +40,11 @@
                     <span>{{ count($item->comments ?? []) }}</span>
                 </div>
             </div>
+            @if(!$item->purchase)
             <a href="{{ route('purchase', ['item' => $item->id]) }}">
                 <button class="buy-button product-aligned">購入手続きへ</button>
             </a>
+            @endif
         </div>
 
         <section class="product-description">
@@ -120,4 +125,4 @@ document.getElementById('like-icon').addEventListener('click', function () {
 });
 </script>
 
-@endsection('content')
+@endsection

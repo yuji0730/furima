@@ -23,12 +23,19 @@ class AddressRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required',
+        $rules = [
             'postal' => 'required|size:8',
             'address' => 'required',
             'building' => 'required',
         ];
+
+        if ($this->routeIs('profile.update')) {
+            $rules['name'] = 'required';
+        } else {
+            $rules['item_id'] = 'required|integer|exists:items,id';
+        }
+
+        return $rules;
     }
 
     public function messages()

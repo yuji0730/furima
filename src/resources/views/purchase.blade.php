@@ -13,14 +13,18 @@
     <p class="item-price">¥{{ number_format($item->price) }}</p>
 
     <div class="section-divider"></div>
-
+    <form action="{{ route('purchase.store', ['item' => $item->id]) }}" method="POST">
+        @csrf
     <div class="form-group">
-      <label for="payment">支払い方法</label>
-      <select name="payment" id="payment">
-        <option>選択してください</option>
-        <option value="convenience">コンビニ払い</option>
-        <option value="credit">カード支払い</option>
+      <label for="pay">支払い方法</label>
+      <select name="pay" id="pay">
+        <option value="">選択してください</option>
+        <option value="1" {{ old('pay') == '1' ? 'selected' : '' }}>コンビニ払い</option>
+        <option value="2" {{ old('pay') == '2' ? 'selected' : '' }}>カード支払い</option>
       </select>
+      @error('pay')
+            <div class="error">{{ $message }}</div>
+      @enderror
     </div>
 
     <div class="section-divider"></div>
@@ -28,7 +32,8 @@
     <div class="shipping-info">
       <label>配送先</label>
       <p>〒 {{ $profile->postal ?? '未設定' }}<br>{{ $profile->address ?? '未設定' }}<br>{{ $profile->building ?? '' }}</p>
-      <a href="{{ route('address.edit') }}" class="change-link">変更する</a>
+      <a href="{{ route('address.edit', ['item' => $item->id]) }}" class="change-link">変更する</a>
+
     </div>
   </div>
 
@@ -40,30 +45,38 @@
       </div>
       <div class="summary-row">
         <span>支払い方法</span>
-        <span id="selected-payment">選択してください</span>
+        <span id="selected-payment">
+            @switch(old('pay'))
+                @case('1') コンビニ払い @break
+                @case('2') カード支払い @break
+                @default 選択してください
+            @endswitch
+        </span>
       </div>
     </div>
-    <button class="buy-button">購入する</button>
+        <button class="buy-button" type="submit">購入する</button>
+    </form>
   </div>
 </div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const paymentSelect = document.getElementById('payment');
-    const paymentDisplay = document.getElementById('selected-payment');
+    const select = document.getElementById('pay');
+    const display = document.getElementById('selected-payment');
 
-    if (paymentSelect && paymentDisplay) {
-      paymentDisplay.textContent = paymentSelect.options[paymentSelect.selectedIndex].text;
+    const labelMap = {
+      "1": "コンビニ払い",
+      "2": "カード支払い"
+    };
 
-      paymentSelect.addEventListener('change', function () {
-        const selected = this.options[this.selectedIndex].text;
-        paymentDisplay.textContent = selected;
-      });
-    }
+    const updateDisplay = () => {
+      display.textContent = labelMap[select.value] || "選択してください";
+    };
+
+    updateDisplay();
+    select.addEventListener('change', updateDisplay);
   });
 </script>
-
-
 
 @endsection
 

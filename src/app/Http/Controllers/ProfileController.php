@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\App;
 use App\Models\Profile;
 use App\Models\Item;
 use App\Models\Purchase;
@@ -49,10 +50,13 @@ class ProfileController extends Controller
     }
 
 
-    public function update(ProfileRequest $profileRequest, AddressRequest $addressRequest)
+    public function update(ProfileRequest $profileRequest)
     {
         $user = Auth::user();
         $profile = $user->profile ?? new Profile(['user_id' => $user->id]);
+
+        $addressRequest = App::make(AddressRequest::class);
+        $addressRequest->setContainer(app())->validateResolved();
 
         $validated = array_merge(
             $profileRequest->validated(),

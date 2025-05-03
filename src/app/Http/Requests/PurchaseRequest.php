@@ -27,4 +27,12 @@ class PurchaseRequest extends FormRequest
             'pay' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'pay.required' => '支払方法を選択してください',
+
+        ];
+    }
 }

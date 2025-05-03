@@ -18,9 +18,13 @@
         </a>
     </div>
     <div class="search-container">
-        <form class="search-form">
-            <input type="text" placeholder="なにをお探しですか？" class="search-input">
+        <form class="search-form" action="{{ route('top') }}" method="GET">
+            <input type="text" name="keyword" value="{{ request('keyword') }}" placeholder="なにをお探しですか？" class="search-input">
+            @if(request('tab'))
+                <input type="hidden" name="tab" value="{{ request('tab') }}">
+            @endif
         </form>
+
     </div>
     <div class="header-right">
         @guest

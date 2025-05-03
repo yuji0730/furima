@@ -21,22 +21,27 @@ use App\Http\Controllers\LikeController;
 */
 
 Route::get('/', [ItemController::class, 'index'])->name('top');
-Route::get('/sell', [ItemController::class, 'exhibition'])->name('sell');
+Route::middleware('auth')->get('/sell', [ItemController::class, 'exhibition'])->name('sell');
 Route::post('/items', [ItemController::class, 'store'])->name('items.store');
 Route::get('/mypage', [ProfileController::class, 'profile'])->name('mypage');
 Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('mypage.profile');
-Route::get('/item/{item_id}', [ItemController::class, 'detail']);
+Route::get('/item/{item_id}', [ItemController::class, 'detail'])->name('detail');
+
+
+Route::middleware('auth')->get('/purchase/address/{item}', [PurchaseController::class, 'address'])->name('address.edit');
+
 Route::middleware('auth')->get('/purchase/{item}', [PurchaseController::class, 'purchase'])->name('purchase');
+Route::post('/purchase/{item}', [PurchaseController::class, 'store'])->name('purchase.store');
 
-Route::middleware('auth')->get('/purchase/address', [PurchaseController::class, 'address'])->name('address.edit');
-Route::middleware('auth')->post('/address/update', [PurchaseController::class, 'updateAddress'])->name('address.update');
 
+Route::middleware('auth')->post('/purchase/address/{item}/update', [PurchaseController::class, 'updateAddress'])->name('address.update');
 
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+
 // Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 //     ->name('logout');
 
@@ -51,5 +56,3 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/like/toggle', [LikeController::class, 'toggle'])->name('like.toggle');
 });
-
-

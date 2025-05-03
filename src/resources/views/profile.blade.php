@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/profile.css')}}">
+<link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 @endsection
 
 @section('content')
@@ -9,40 +9,47 @@
   <div class="profile-header">
     <div class="profile-box">
       @if ($profile && $profile->image)
-      <img src="{{ asset('storage/profile_images/' . $profile->image) }}" alt="プロフィール画像" class="profile-image">
+        <img src="{{ asset('storage/' . $profile->image) }}" alt="プロフィール画像" class="profile-image">
       @else
-      <div class="profile-image" style="background-color: #ddd;"></div>
+        <div class="profile-image" style="background-color: #ddd;"></div>
       @endif
       <h2 class="username">{{ $profile ? $profile->name : '未設定' }}</h2>
       <a href="{{ route('mypage.profile') }}" class="edit-button">プロフィールを編集</a>
     </div>
   </div>
 
-    <div class="tab-menu">
-        <a href="{{ route('mypage.profile') }}?tab=sell" class="tab {{ request('tab', 'sell') === 'sell' ? 'active' : '' }}">出品した商品</a>
-        <a href="{{ route('mypage.profile') }}?tab=buy" class="tab {{ request('tab') === 'buy' ? 'active' : '' }}">購入した商品</a>
-    </div>
+  <div class="tab-menu">
+    <a href="{{ route('mypage', ['tab' => 'sell']) }}" class="tab {{ $tab === 'sell' ? 'active' : '' }}">出品した商品</a>
+    <a href="{{ route('mypage', ['tab' => 'buy']) }}" class="tab {{ $tab === 'buy' ? 'active' : '' }}">購入した商品</a>
+  </div>
 
+  <div class="product-list">
   @if ($tab === 'sell')
-  <div class="items-grid">
     @foreach($listedItems as $item)
-      <div class="item-card">
-        <div class="item-image">商品画像</div>
-        <div class="item-name">{{ $item->name }}</div>
-      </div>
+      <a href="{{ route('detail', ['item_id' => $item->id]) }}" class="product-item">
+        <div class="product-image small">
+          @if ($item->isSold())
+            <div class="sold-badge">SOLD</div>
+          @endif
+          <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
+        </div>
+        <p class="product-name">{{ $item->name }}</p>
+      </a>
     @endforeach
-  </div>
-@elseif ($tab === 'buy')
-  <div class="items-grid">
+  @elseif ($tab === 'buy')
     @foreach($purchasedItems as $item)
-      <div class="item-card">
-        <div class="item-image">商品画像</div>
-        <div class="item-name">{{ $item->name }}</div>
-      </div>
+      <a href="{{ route('detail', ['item_id' => $item->id]) }}" class="product-item">
+        <div class="product-image small">
+          <div class="sold-badge">SOLD</div>
+          <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
+        </div>
+        <p class="product-name">{{ $item->name }}</p>
+      </a>
     @endforeach
+  @endif
   </div>
-@endif
 
 </div>
 @endsection
+
 
